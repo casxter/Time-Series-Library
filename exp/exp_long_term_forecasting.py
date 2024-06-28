@@ -11,6 +11,7 @@ import warnings
 import numpy as np
 from utils.dtw_metric import dtw,accelerated_dtw
 from utils.augmentation import run_augmentation,run_augmentation_single
+from torchinfo import summary
 
 warnings.filterwarnings('ignore')
 
@@ -94,6 +95,8 @@ class Exp_Long_Term_Forecast(Exp_Basic):
 
         model_optim = self._select_optimizer()
         criterion = self._select_criterion()
+        # print model info
+        summary(self.model)
 
         if self.args.use_amp:
             scaler = torch.cuda.amp.GradScaler()
@@ -104,6 +107,7 @@ class Exp_Long_Term_Forecast(Exp_Basic):
 
             self.model.train()
             epoch_time = time.time()
+            tl_len = len(train_loader)
             for i, (batch_x, batch_y, batch_x_mark, batch_y_mark) in enumerate(train_loader):
                 iter_count += 1
                 model_optim.zero_grad()
@@ -141,7 +145,7 @@ class Exp_Long_Term_Forecast(Exp_Basic):
                     loss = criterion(outputs, batch_y)
                     train_loss.append(loss.item())
 
-                if (i + 1) % 100 == 0:
+                if (i + 1) % int(tl_len * 0.2) == 0:
                     print("\titers: {0}, epoch: {1} | loss: {2:.7f}".format(i + 1, epoch + 1, loss.item()))
                     speed = (time.time() - time_now) / iter_count
                     left_time = speed * ((self.args.train_epochs - epoch) * train_steps - i)
@@ -270,10 +274,11 @@ class Exp_Long_Term_Forecast(Exp_Basic):
             
 
         mae, mse, rmse, mape, mspe = metric(preds, trues)
-        print('mse:{}, mae:{}, dtw:{}'.format(mse, mae, dtw))
+        metric_str = 'mae:{} mse:{} rmse:{} mape:{} mspe:{} dtw:{}'.format(mae, mse, rmse, mape, mspe, dtw)
+        print(metric_str)
         f = open("result_long_term_forecast.txt", 'a')
         f.write(setting + "  \n")
-        f.write('mse:{}, mae:{}, dtw:{}'.format(mse, mae, dtw))
+        f.write(metric_str)
         f.write('\n')
         f.write('\n')
         f.close()

@@ -4,7 +4,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-from mamba_ssm import Mamba
+# from mamba_ssm import Mamba
 
 from layers.Embed import DataEmbedding
 
@@ -20,12 +20,12 @@ class Model(nn.Module):
         
         self.embedding = DataEmbedding(configs.enc_in, configs.d_model, configs.embed, configs.freq, configs.dropout)
 
-        self.mamba = Mamba(
-            d_model = configs.d_model,
-            d_state = configs.d_ff,
-            d_conv = configs.d_conv,
-            expand = configs.expand,
-        )
+        # self.mamba = Mamba(
+        #     d_model = configs.d_model,
+        #     d_state = configs.d_ff,
+        #     d_conv = configs.d_conv,
+        #     expand = configs.expand,
+        # )
 
         self.out_layer = nn.Linear(configs.d_model, configs.c_out, bias=False)
 
