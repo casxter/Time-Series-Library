@@ -49,7 +49,7 @@ do
     --des $des \
     --itr 1
 
-  # Informer
+#  # Informer
   model_name=Informer
   model_id=`date +'%Y%m%d-%H%M%S'`
 
@@ -76,37 +76,7 @@ do
     --des $des \
     --itr 1
 
-  # iTransformer
-  model_name=iTransformer
-  model_id=`date +'%Y%m%d-%H%M%S'`
-
-  python -u run.py \
-    --task_name long_term_forecast \
-    --is_training 1 \
-        --root_path $root_path \
-    --data_path $data_path \
-    --model_id $model_id\
-    --model $model_name \
-    --data custom \
-    --features MS \
-    --seq_len $seq_len \
-    --label_len $label_len \
-    --pred_len $pred_len \
-    --target $target \
-    --e_layers 2 \
-    --d_layers 1 \
-    --factor 3 \
-    --batch_size $batch_size \
-    --enc_in $enc_in \
-    --dec_in $dec_in \
-    --c_out $c_out \
-    --des $des \
-    --d_model 128 \
-    --d_ff 128 \
-    --itr 1
-
   # Autoformer
-  # 爆内存
   model_name=Autoformer
   model_id=`date +'%Y%m%d-%H%M%S'`
   python -u run.py \
@@ -125,7 +95,7 @@ do
     --e_layers 2 \
     --d_layers 1 \
     --factor 3 \
-    --batch_size 16 \
+    --batch_size $batch_size \
     --enc_in $enc_in \
     --dec_in $dec_in \
     --c_out $c_out \
@@ -133,7 +103,6 @@ do
     --itr 1
 
   # FEDformer
-  # 爆内存
   model_name=FEDformer
   model_id=`date +'%Y%m%d-%H%M%S'`
 
@@ -153,7 +122,7 @@ do
     --e_layers 2 \
     --d_layers 1 \
     --factor 3 \
-    --batch_size 16 \
+    --batch_size $batch_size \
     --enc_in $enc_in \
     --dec_in $dec_in \
     --c_out $c_out \

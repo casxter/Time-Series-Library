@@ -1,17 +1,18 @@
 #!/usr/bin/env bash
 
+ev_id=0
 root_path='/home/qc/twj/ml_data/data2/'
-data_path='#0_hour_available_energy.csv'
+data_path="#${ev_id}_day_residual_ae.csv"
 #seq_len=168
 #label_len=96
 #pred_len=72
 batch_size=32
-c_len=2
+c_len=4
 enc_in=$c_len
 dec_in=$c_len
 c_out=$c_len
-target='available_energy'
-des='soh-'$target
+target="residual_ae"
+des='soh-'$target'-#'${ev_id}
 
 # 文件名
 filename="./scripts/seq_label_pred.txt"
