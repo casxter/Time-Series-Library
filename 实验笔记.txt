@@ -1,0 +1,29 @@
+result_long_term_forecast_7_3_include_ae_and_imf.txt
+做了两组实验 exp7_3 预测#x_hour_available_energy.csv，#x_hour_residual_ae_imf.csv
+
+seq_label_pred.txt
+72 36 36
+72 36 72
+168 84 84
+168 84 168
+360 180 180
+360 180 360
+720 360 360
+720 360 720
+
+包含模型
+Transformer 2017
+Informer 2020
+FEDformer 2022
+TimesNet 2022
+TimeMixer 2022
+
+
+exp7_6
+r_ae_20240706-214318.log
+一组实验 预测_hour_available_energy_2
+Transformer
+Informer
+FEDformer
+CNNLSTM
+TimeMixer

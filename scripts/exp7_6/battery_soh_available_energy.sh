@@ -6,12 +6,15 @@ for ev_id in $(seq 0 5); do
 
   root_path='/home/qc/twj/ml_data/data2/'
   data_path="#${ev_id}_hour_available_energy_2.csv"
+  #seq_len=168
+  #label_len=96
+  #pred_len=72
   c_len=2
   enc_in=$c_len
   dec_in=$c_len
   c_out=$c_len
   target="available_energy"
-  des="soh-available-energy-#${ev_id}"
+  des='soh-available-energy-#'${ev_id}
 
   # 文件名
   filename="./scripts/seq_label_pred.txt"
@@ -42,7 +45,7 @@ for ev_id in $(seq 0 5); do
         --e_layers 2 \
         --d_layers 1 \
         --factor 3 \
-        --batch_size 16 \
+        --batch_size 8 \
         --enc_in $enc_in \
         --dec_in $dec_in \
         --c_out $c_out \
@@ -69,7 +72,7 @@ for ev_id in $(seq 0 5); do
       --e_layers 2 \
       --d_layers 1 \
       --factor 3 \
-      --batch_size 16 \
+      --batch_size 8 \
       --enc_in $enc_in \
       --dec_in $dec_in \
       --c_out $c_out \
@@ -93,7 +96,7 @@ for ev_id in $(seq 0 5); do
         --seq_len $seq_len \
         --label_len $label_len \
         --pred_len $pred_len \
-        --target $target \
+         --target $target \
         --e_layers 2 \
         --d_layers 1 \
         --factor 3 \
@@ -101,11 +104,41 @@ for ev_id in $(seq 0 5); do
         --enc_in $enc_in \
         --dec_in $dec_in \
         --c_out $c_out \
-        --learning_rate 0.02 \
         --des $des \
         --itr 1
 
+    # TimesNet
+  #  model_name=TimesNet
+  #  model_id=`date +'%Y%m%d-%H%M%S'`
+  #
+  #  python -u run.py \
+  #    --task_name long_term_forecast \
+  #    --is_training 1 \
+  #    --root_path $root_path \
+  #    --data_path $data_path \
+  #    --model_id $model_id\
+  #    --model $model_name \
+  #    --data custom \
+  #    --features MS \
+  #    --seq_len $seq_len \
+  #    --label_len $label_len \
+  #    --pred_len $pred_len \
+  #    --target $target \
+  #    --e_layers 2 \
+  #    --d_layers 1 \
+  #    --factor 3 \
+  #    --batch_size $batch_size \
+  #    --enc_in $enc_in \
+  #    --dec_in $dec_in \
+  #    --c_out $c_out \
+  #    --d_model 16 \
+  #    --d_ff 32 \
+  #    --des $des \
+  #    --itr 1 \
+  #    --top_k 5
+
       #CNN-LSTM
+      # Transformer
       model_name=CNNLSTM
       model_id=`date +'%Y%m%d-%H%M%S'`
 
@@ -125,10 +158,9 @@ for ev_id in $(seq 0 5); do
         --e_layers 2 \
         --d_layers 1 \
         --factor 3 \
-        --batch_size 128 \
+        --batch_size 64 \
         --d_model 16 \
         --d_ff 32 \
-        --learning_rate 0.001 \
         --enc_in $enc_in \
         --dec_in $dec_in \
         --c_out $c_out \
@@ -143,6 +175,7 @@ for ev_id in $(seq 0 5); do
 
     d_model=16
     d_ff=32
+    learning_rate=0.01
     patience=10
     down_sampling_layers=3
     down_sampling_window=2
@@ -161,7 +194,7 @@ for ev_id in $(seq 0 5); do
       --pred_len $pred_len \
       --target $target \
       --e_layers 2 \
-      --batch_size 64 \
+      --batch_size 32 \
       --enc_in $enc_in \
       --dec_in $dec_in \
       --c_out $c_out \
@@ -169,7 +202,7 @@ for ev_id in $(seq 0 5); do
       --itr 1 \
       --d_model $d_model \
       --d_ff $d_ff \
-      --learning_rate 0.01 \
+      --learning_rate $learning_rate \
       --patience $patience \
       --down_sampling_layers $down_sampling_layers \
       --down_sampling_method avg \

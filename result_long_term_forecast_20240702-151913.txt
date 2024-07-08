@@ -1,0 +1,55 @@
+
+long_term_forecast_20240628-180722_Transformer_custom_ftMS_sl72_ll36_pl24_dm512_nh8_el2_dl1_df2048_expand2_dc4_fc3_ebtimeF_dtTrue_soh-residual_ae-#0_0  
+mae:0.42599406838417053 mse:0.22815026342868805 rmse:0.4776507616043091 mape:0.1662677377462387 mspe:0.033424943685531616 dtw:-999
+
+long_term_forecast_20240628-180732_Informer_custom_ftMS_sl72_ll36_pl24_dm512_nh8_el2_dl1_df2048_expand2_dc4_fc3_ebtimeF_dtTrue_soh-residual_ae-#0_0  
+mae:0.8886889219284058 mse:0.8948883414268494 rmse:0.9459853768348694 mape:0.3529512882232666 mspe:0.13851714134216309 dtw:-999
+
+long_term_forecast_20240628-180742_iTransformer_custom_ftMS_sl72_ll36_pl24_dm128_nh8_el2_dl1_df128_expand2_dc4_fc3_ebtimeF_dtTrue_soh-residual_ae-#0_0  
+mae:0.1542445570230484 mse:0.026860401034355164 rmse:0.16389143466949463 mape:0.06205995753407478 mspe:0.0043511162512004375 dtw:-999
+
+long_term_forecast_20240628-180756_Autoformer_custom_ftMS_sl72_ll36_pl24_dm512_nh8_el2_dl1_df2048_expand2_dc4_fc3_ebtimeF_dtTrue_soh-residual_ae-#0_0  
+mae:0.08516708761453629 mse:0.009232006035745144 rmse:0.09608332812786102 mape:0.03461908549070358 mspe:0.0015417461981996894 dtw:-999
+
+long_term_forecast_20240628-180810_FEDformer_custom_ftMS_sl72_ll36_pl24_dm512_nh8_el2_dl1_df2048_expand2_dc4_fc3_ebtimeF_dtTrue_soh-residual_ae-#0_0  
+mae:0.01852910965681076 mse:0.0007351001841016114 rmse:0.027112731710076332 mape:0.007406161166727543 mspe:0.00011521988926688209 dtw:-999
+
+long_term_forecast_20240628-180841_PatchTST_custom_ftMS_sl72_ll36_pl24_dm512_nh2_el1_dl1_df2048_expand2_dc4_fc3_ebtimeF_dtTrue_soh-residual_ae-#0_0  
+mae:0.006577636115252972 mse:7.426949741784483e-05 rmse:0.008617974817752838 mape:0.002649925649166107 mspe:1.2074061487510335e-05 dtw:-999
+
+long_term_forecast_20240628-180854_DLinear_custom_ftMS_sl72_ll36_pl24_dm512_nh8_el2_dl1_df2048_expand2_dc4_fc3_ebtimeF_dtTrue_soh-residual_ae-#0_0  
+mae:0.354621946811676 mse:0.1334792971611023 rmse:0.3653481900691986 mape:0.14307375252246857 mspe:0.021844765171408653 dtw:-999
+
+long_term_forecast_20240628-180902_TimesNet_custom_ftMS_sl72_ll36_pl24_dm16_nh8_el2_dl1_df32_expand2_dc4_fc3_ebtimeF_dtTrue_soh-residual_ae-#0_0  
+mae:0.10691948980093002 mse:0.017459353432059288 rmse:0.1321338415145874 mape:0.04277502000331879 mspe:0.0027986897621303797 dtw:-999
+
+long_term_forecast_20240628-180919_TimeMixer_custom_ftMS_sl72_ll36_pl24_dm16_nh8_el2_dl1_df32_expand2_dc4_fc1_ebtimeF_dtTrue_soh-residual_ae-#0_0  
+mae:0.006725013256072998 mse:7.043243385851383e-05 rmse:0.008392402902245522 mape:0.0027316994965076447 mspe:1.182402775157243e-05 dtw:-999
+
+long_term_forecast_20240628-180935_Transformer_custom_ftMS_sl144_ll72_pl24_dm512_nh8_el2_dl1_df2048_expand2_dc4_fc3_ebtimeF_dtTrue_soh-residual_ae-#0_0  
+mae:0.5621671676635742 mse:0.36790692806243896 rmse:0.606553316116333 mape:0.2203667014837265 mspe:0.054703906178474426 dtw:-999
+
+long_term_forecast_20240628-180945_Informer_custom_ftMS_sl144_ll72_pl24_dm512_nh8_el2_dl1_df2048_expand2_dc4_fc3_ebtimeF_dtTrue_soh-residual_ae-#0_0  
+mae:0.8824913501739502 mse:0.8450539112091064 rmse:0.9192681312561035 mape:0.3494607210159302 mspe:0.12869256734848022 dtw:-999
+
+long_term_forecast_20240628-180959_iTransformer_custom_ftMS_sl144_ll72_pl24_dm128_nh8_el2_dl1_df128_expand2_dc4_fc3_ebtimeF_dtTrue_soh-residual_ae-#0_0  
+mae:0.3258957862854004 mse:0.11703528463840485 rmse:0.3421041965484619 mape:0.13149555027484894 mspe:0.019136393442749977 dtw:-999
+
+long_term_forecast_20240628-181013_Autoformer_custom_ftMS_sl144_ll72_pl24_dm512_nh8_el2_dl1_df2048_expand2_dc4_fc3_ebtimeF_dtTrue_soh-residual_ae-#0_0  
+mae:0.131349578499794 mse:0.021791087463498116 rmse:0.14761804044246674 mape:0.05246889591217041 mspe:0.0034659455996006727 dtw:-999
+
+long_term_forecast_20240628-181035_FEDformer_custom_ftMS_sl144_ll72_pl24_dm512_nh8_el2_dl1_df2048_expand2_dc4_fc3_ebtimeF_dtTrue_soh-residual_ae-#0_0  
+mae:0.06937313079833984 mse:0.0068472763523459435 rmse:0.08274827152490616 mape:0.027557797729969025 mspe:0.0010677161626517773 dtw:-999
+
+long_term_forecast_20240628-181105_PatchTST_custom_ftMS_sl144_ll72_pl24_dm512_nh2_el1_dl1_df2048_expand2_dc4_fc3_ebtimeF_dtTrue_soh-residual_ae-#0_0  
+mae:0.018370572477579117 mse:0.00044610010809265077 rmse:0.021121082827448845 mape:0.007419615983963013 mspe:7.336978887906298e-05 dtw:-999
+
+long_term_forecast_20240628-181121_DLinear_custom_ftMS_sl144_ll72_pl24_dm512_nh8_el2_dl1_df2048_expand2_dc4_fc3_ebtimeF_dtTrue_soh-residual_ae-#0_0  
+mae:0.6014043092727661 mse:0.3728656470775604 rmse:0.6106272339820862 mape:0.24209952354431152 mspe:0.060434333980083466 dtw:-999
+
+long_term_forecast_20240628-181133_TimesNet_custom_ftMS_sl144_ll72_pl24_dm16_nh8_el2_dl1_df32_expand2_dc4_fc3_ebtimeF_dtTrue_soh-residual_ae-#0_0  
+mae:0.3753697872161865 mse:0.1531762033700943 rmse:0.391377329826355 mape:0.15123391151428223 mspe:0.024894634261727333 dtw:-999
+
+long_term_forecast_20240628-181151_TimeMixer_custom_ftMS_sl144_ll72_pl24_dm16_nh8_el2_dl1_df32_expand2_dc4_fc1_ebtimeF_dtTrue_soh-residual_ae-#0_0  
+mae:0.00823359377682209 mse:0.0001032771251630038 rmse:0.01016253512352705 mape:0.0033269438426941633 mspe:1.691110992396716e-05 dtw:-999
+

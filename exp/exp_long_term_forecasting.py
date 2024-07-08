@@ -137,8 +137,9 @@ class Exp_Long_Term_Forecast(Exp_Basic):
                     if self.args.output_attention:
                         outputs = self.model(batch_x, batch_x_mark, dec_inp, batch_y_mark)[0]
                     else:
+                        # [b,sl,feature] [b,sl,4] [b,ll+pl,feature] [b,ll+pl,4]
                         outputs = self.model(batch_x, batch_x_mark, dec_inp, batch_y_mark)
-
+                        # outputs [b,pl,feature]
                     f_dim = -1 if self.args.features == 'MS' else 0
                     outputs = outputs[:, -self.args.pred_len:, f_dim:]
                     batch_y = batch_y[:, -self.args.pred_len:, f_dim:].to(self.device)

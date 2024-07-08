@@ -219,38 +219,7 @@ for ev_id in $(seq 0 5); do
 #      --itr 1
 
     # TimesNet
-#    model_name=TimesNet
-#    model_id=`date +'%Y%m%d-%H%M%S'`
-#
-#    python -u run.py \
-#      --task_name long_term_forecast \
-#      --is_training 1 \
-#      --root_path $root_path \
-#      --data_path $data_path \
-#      --model_id $model_id\
-#      --model $model_name \
-#      --data custom \
-#      --features MS \
-#      --seq_len $seq_len \
-#      --label_len $label_len \
-#      --pred_len $pred_len \
-#      --target $target \
-#      --e_layers 2 \
-#      --d_layers 1 \
-#      --factor 3 \
-#      --batch_size $batch_size \
-#      --enc_in $enc_in \
-#      --dec_in $dec_in \
-#      --c_out $c_out \
-#      --d_model 16 \
-#      --d_ff 32 \
-#      --des $des \
-#      --itr 1 \
-#      --top_k 5
-
-    #CNN-LSTM
-    # Transformer
-    model_name=CNNLSTM
+    model_name=TimesNet
     model_id=`date +'%Y%m%d-%H%M%S'`
 
     python -u run.py \
@@ -269,16 +238,15 @@ for ev_id in $(seq 0 5); do
       --e_layers 2 \
       --d_layers 1 \
       --factor 3 \
-      --batch_size 64 \
-      --d_model 16 \
-      --d_ff 32 \
+      --batch_size $batch_size \
       --enc_in $enc_in \
       --dec_in $dec_in \
       --c_out $c_out \
+      --d_model 16 \
+      --d_ff 32 \
       --des $des \
       --itr 1 \
-      --cnnlstm_hidden 128 \
-      --cnnlstm_nl 3
+      --top_k 5
 
     # TimeMixer
     model_name=TimeMixer
