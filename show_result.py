@@ -30,7 +30,7 @@ with open('./result_long_term_forecast.txt', 'rt') as f:
                  'mape': float(metrics[2])
                  },ignore_index=True)
 print(metrics_df.describe())
-metrics_df.to_csv("./logs/exp_metrics_7_7.csv", index=False)
+metrics_df.to_csv("./logs/exp_metrics_7_8.csv", index=False)
 # metrics_df = metrics_df[(metrics_df['mse'] < 100) & (metrics_df['target'] == 'soh-residual-ae-imf')]
 
 plt.figure(figsize=(12,9))

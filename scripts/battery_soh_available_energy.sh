@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
 
+LOG_FILE="ae_`date +'%Y%m%d-%H%M%S'`.log"
+
 for ev_id in $(seq 0 5); do
   echo "ev_id: $ev_id"
 
@@ -11,7 +13,7 @@ for ev_id in $(seq 0 5); do
   dec_in=$c_len
   c_out=$c_len
   target="available_energy"
-  des="soh-available-energy-#${ev_id}"
+  des="available-energy-2-#${ev_id}"
 
   # 文件名
   filename="./scripts/seq_label_pred.txt"
@@ -47,7 +49,8 @@ for ev_id in $(seq 0 5); do
         --dec_in $dec_in \
         --c_out $c_out \
         --des $des \
-        --itr 1
+        --itr 1 \
+        2>&1 | tee logs/$LOG_FILE
 
     # Informer
     model_name=Informer
@@ -74,7 +77,8 @@ for ev_id in $(seq 0 5); do
       --dec_in $dec_in \
       --c_out $c_out \
       --des $des \
-      --itr 1
+      --itr 1 \
+      2>&1 | tee logs/$LOG_FILE
 
       # FEDformer
       # 爆内存
@@ -97,13 +101,14 @@ for ev_id in $(seq 0 5); do
         --e_layers 2 \
         --d_layers 1 \
         --factor 3 \
+        --learning_rate 0.001 \
         --batch_size 16 \
         --enc_in $enc_in \
         --dec_in $dec_in \
         --c_out $c_out \
-        --learning_rate 0.02 \
         --des $des \
-        --itr 1
+        --itr 1 \
+        2>&1 | tee logs/$LOG_FILE
 
       #CNN-LSTM
       model_name=CNNLSTM
@@ -128,14 +133,14 @@ for ev_id in $(seq 0 5); do
         --batch_size 128 \
         --d_model 16 \
         --d_ff 32 \
-        --learning_rate 0.001 \
         --enc_in $enc_in \
         --dec_in $dec_in \
         --c_out $c_out \
         --des $des \
         --itr 1 \
         --cnnlstm_hidden 128 \
-        --cnnlstm_nl 3
+        --cnnlstm_nl 3 \
+        2>&1 | tee logs/$LOG_FILE
 
     # TimeMixer
     model_name=TimeMixer
@@ -169,11 +174,12 @@ for ev_id in $(seq 0 5); do
       --itr 1 \
       --d_model $d_model \
       --d_ff $d_ff \
-      --learning_rate 0.01 \
+      --learning_rate 0.001 \
       --patience $patience \
       --down_sampling_layers $down_sampling_layers \
       --down_sampling_method avg \
-      --down_sampling_window $down_sampling_window
+      --down_sampling_window $down_sampling_window \
+      2>&1 | tee logs/$LOG_FILE
 
   done < "$filename"
 done
