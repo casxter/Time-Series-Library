@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
 
 
-EXP_TIME=`date +'m%d-%H%M'`
-LOG_FILE="ae_${EXP_TIME}.log"
+LOG_FILE="ae_`date +'%Y%m%d-%H%M%S'`.log"
 
 for ev_id in $(seq 0 5); do
   echo "ev_id: $ev_id"
@@ -184,5 +183,3 @@ for ev_id in $(seq 0 5); do
 
   done < "$filename"
 done
-
-cp result_long_term_forecast.txt "result_long_term_forecast${EXP_TIME}_.txt"

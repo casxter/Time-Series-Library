@@ -27,3 +27,6 @@ Informer
 FEDformer
 CNNLSTM
 TimeMixer
+
+
+exp7_8
