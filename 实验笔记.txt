@@ -29,4 +29,4 @@ CNNLSTM
 TimeMixer
 
 
-exp7_8
+result_long_term_forecast_7_9.txt 去除timemixer result_long_term_forecast_7_9_all.txt 包含timemixer

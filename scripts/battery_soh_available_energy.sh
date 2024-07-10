@@ -2,6 +2,7 @@
 
 
 EXP_TIME=`date +'%m%d-%H%M'`
+export $EXP_TIME
 LOG_FILE="ae_${EXP_TIME}.log"
 model_id='origin'
 
@@ -18,7 +19,7 @@ for ev_id in $(seq 0 5); do
   c_out=$c_len
   target="available_energy"
   des="available-energy-2-#${ev_id}"
-
+  train_epochs=10
   # 文件名
   filename="./scripts/seq_label_pred.txt"
 
@@ -28,130 +29,124 @@ for ev_id in $(seq 0 5); do
     # 输出读取的值
     echo "seq_len: $seq_len, label_len: $label_len, pred_len: $pred_len"
 
-   # Transformer
-#    model_name=Transformer
-#    model_id=`date +'%Y%m%d-%H%M%S'`
-#
-#    python -u run.py \
-#        --task_name long_term_forecast \
-#        --is_training 1 \
-#        --root_path $root_path \
-#        --data_path $data_path \
-#        --model_id $model_id\
-#        --model $model_name \
-#        --data custom \
-#        --features MS \
-#        --seq_len $seq_len \
-#        --label_len $label_len \
-#        --pred_len $pred_len \
-#        --target $target \
-#        --e_layers 2 \
-#        --d_layers 1 \
-#        --factor 3 \
-#        --batch_size 16 \
-#        --enc_in $enc_in \
-#        --dec_in $dec_in \
-#        --c_out $c_out \
-#        --des $des \
-#        --itr 1 \
-#        2>&1 | tee -a logs/$LOG_FILE
-#
+    #Transformer
+
+    python -u run.py \
+        --task_name long_term_forecast \
+        --is_training 1 \
+        --root_path $root_path \
+        --data_path $data_path \
+        --model_id $model_id\
+        --model Transformer \
+        --data custom \
+        --features MS \
+        --seq_len $seq_len \
+        --label_len $label_len \
+        --pred_len $pred_len \
+        --target $target \
+        --e_layers 2 \
+        --d_layers 1 \
+        --factor 3 \
+        --train_epochs $train_epochs \
+        --batch_size 64 \
+        --enc_in $enc_in \
+        --dec_in $dec_in \
+        --c_out $c_out \
+        --des $des \
+        --itr 1 \
+        2>&1 | tee -a logs/$LOG_FILE
+
 #    # Informer
-#    model_name=Informer
-#    model_id=`date +'%Y%m%d-%H%M%S'`
-#
-#    python -u run.py \
-#      --task_name long_term_forecast \
-#      --is_training 1 \
-#      --root_path $root_path \
-#      --data_path $data_path \
-#      --model_id $model_id\
-#      --model $model_name \
-#      --data custom \
-#      --features MS \
-#      --seq_len $seq_len \
-#      --label_len $label_len \
-#      --pred_len $pred_len \
-#      --target $target \
-#      --e_layers 2 \
-#      --d_layers 1 \
-#      --factor 3 \
-#      --batch_size 16 \
-#      --enc_in $enc_in \
-#      --dec_in $dec_in \
-#      --c_out $c_out \
-#      --des $des \
-#      --itr 1 \
-#      2>&1 | tee -a  logs/$LOG_FILE
+    python -u run.py \
+      --task_name long_term_forecast \
+      --is_training 1 \
+      --root_path $root_path \
+      --data_path $data_path \
+      --model_id $model_id\
+      --model Informer \
+      --data custom \
+      --features MS \
+      --seq_len $seq_len \
+      --label_len $label_len \
+      --pred_len $pred_len \
+      --target $target \
+      --e_layers 2 \
+      --d_layers 1 \
+      --factor 3 \
+      --train_epochs $train_epochs \
+      --batch_size 64 \
+      --enc_in $enc_in \
+      --dec_in $dec_in \
+      --c_out $c_out \
+      --des $des \
+      --itr 1 \
+      2>&1 | tee -a  logs/$LOG_FILE
 
       # FEDformer
       # 爆内存
-#      model_name=FEDformer
-#      model_id=`date +'%Y%m%d-%H%M%S'`
-#
-#      python -u run.py \
-#        --task_name long_term_forecast \
-#        --is_training 1 \
-#        --root_path $root_path \
-#        --data_path $data_path \
-#        --model_id $model_id\
-#        --model $model_name \
-#        --data custom \
-#        --features MS \
-#        --seq_len $seq_len \
-#        --label_len $label_len \
-#        --pred_len $pred_len \
-#        --target $target \
-#        --e_layers 2 \
-#        --d_layers 1 \
-#        --d_model 16 \
-#        --learning_rate 0.001 \
-#        --factor 3 \
-#        --batch_size 32 \
-#        --enc_in $enc_in \
-#        --dec_in $dec_in \
-#        --c_out $c_out \
-#        --des $des \
-#        --itr 1 \
-#        2>&1 | tee -a  logs/$LOG_FILE
 
-#      #CNN-LSTM
-#      model_name=CNNLSTM
-#      model_id=`date +'%Y%m%d-%H%M%S'`
-#
 #      python -u run.py \
-#        --task_name long_term_forecast \
-#        --is_training 1 \
-#        --root_path $root_path \
-#        --data_path $data_path \
-#        --model_id $model_id\
-#        --model $model_name \
-#        --data custom \
-#        --features MS \
-#        --seq_len $seq_len \
-#        --label_len $label_len \
-#        --pred_len $pred_len \
-#        --target $target \
-#        --e_layers 2 \
-#        --d_layers 1 \
-#        --factor 3 \
-#        --batch_size 64 \
-#        --d_model 16 \
-#        --d_ff 32 \
-#        --enc_in $enc_in \
-#        --dec_in $dec_in \
-#        --c_out $c_out \
-#        --des $des \
-#        --itr 1 \
-#        --cnnlstm_hidden 128 \
-#        --cnnlstm_nl 3 \
-#        2>&1 | tee -a  logs/$LOG_FILE
+        --task_name long_term_forecast \
+        --is_training 1 \
+        --root_path $root_path \
+        --data_path $data_path \
+        --model_id $model_id\
+        --model FEDformer \
+        --data custom \
+        --features MS \
+        --seq_len $seq_len \
+        --label_len $label_len \
+        --pred_len $pred_len \
+        --target $target \
+        --e_layers 2 \
+        --d_layers 1 \
+        --d_model 16 \
+        --learning_rate 0.001 \
+        --factor 3 \
+        --train_epochs $train_epochs \
+        --batch_size 128 \
+        --enc_in $enc_in \
+        --dec_in $dec_in \
+        --c_out $c_out \
+        --des $des \
+        --itr 1 \
+        2>&1 | tee -a  logs/$LOG_FILE
+
+      #CNN-LSTM
+
+      python -u run.py \
+        --task_name long_term_forecast \
+        --is_training 1 \
+        --root_path $root_path \
+        --data_path $data_path \
+        --model_id $model_id\
+        --model CNNLSTM \
+        --data custom \
+        --features MS \
+        --seq_len $seq_len \
+        --label_len $label_len \
+        --pred_len $pred_len \
+        --target $target \
+        --e_layers 2 \
+        --d_layers 1 \
+        --factor 3 \
+        --train_epochs $train_epochs \
+        --batch_size 128 \
+        --d_model 16 \
+        --d_ff 32 \
+        --enc_in $enc_in \
+        --dec_in $dec_in \
+        --c_out $c_out \
+        --des $des \
+        --itr 1 \
+        --cnnlstm_hidden 128 \
+        --cnnlstm_nl 3 \
+        2>&1 | tee -a  logs/$LOG_FILE
 
     # TimeMixer
-    model_name=TimeMixer
 
-    d_model=16
-    d_ff=32
+    d_model=8
+    d_ff=16
     down_sampling_layers=3
     down_sampling_window=2
 
@@ -161,7 +156,7 @@ for ev_id in $(seq 0 5); do
       --root_path $root_path \
       --data_path $data_path \
       --model_id $model_id\
-      --model $model_name \
+      --model TimeMixer \
       --data custom \
       --features MS \
       --seq_len $seq_len \
@@ -169,6 +164,7 @@ for ev_id in $(seq 0 5); do
       --pred_len $pred_len \
       --target $target \
       --e_layers 2 \
+      --train_epochs 5 \
       --batch_size 32 \
       --enc_in $enc_in \
       --dec_in $dec_in \
@@ -177,7 +173,7 @@ for ev_id in $(seq 0 5); do
       --itr 1 \
       --d_model $d_model \
       --d_ff $d_ff \
-      --learning_rate 0.02 \
+      --learning_rate 0.01 \
       --down_sampling_layers $down_sampling_layers \
       --down_sampling_method avg \
       --down_sampling_window $down_sampling_window \
@@ -188,6 +184,6 @@ done
 
 end=$(date +%s)
 
-cp result_long_term_forecast.txt "result_long_term_forecast${EXP_TIME}_.txt"
+#cp result_long_term_forecast.txt "result_long_term_forecast_${EXP_TIME}_.txt"
 
 echo "Execution time: $((end-start)) seconds" | tee -a  logs/$LOG_FILE

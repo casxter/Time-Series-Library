@@ -10,7 +10,7 @@ model_id_dict = {'Transformer': 1, 'Informer': 2, 'FEDformer': 3, 'CNNLSTM': 4,'
 def read_result():
     # 显示跑完的结果
     metrics_df = pd.DataFrame(columns=['ev_id', 'model', 'target', 'sl', 'pl', 'mae', 'mse', 'mape'])
-    with open('./result_long_term_forecast_7_9.txt', 'rt') as f:
+    with open('./result_long_term_forecast.txt', 'rt') as f:
         for model_str in f.readlines():
             model_str = model_str.rstrip()
             if 'long_term_forecast' in model_str:
@@ -32,7 +32,7 @@ def read_result():
                      'mape': float(metrics[2])
                      },ignore_index=True)
     print(metrics_df.describe())
-    metrics_df.to_csv("./logs/exp_metrics_7_8.csv", index=False)
+    metrics_df.to_excel("./logs/exp_metrics_7_10.xlsx", index=False)
     return metrics_df
     # metrics_df = metrics_df[(metrics_df['mse'] < 100) & (metrics_df['target'] == 'soh-residual-ae-imf')]
 
@@ -71,3 +71,4 @@ def show_fed_timemixer():
     plt.show()
 
 show_all_model()
+# show_fed_timemixer()
