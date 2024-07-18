@@ -12,13 +12,13 @@ for ev_id in $(seq 0 5); do
   echo "ev_id: $ev_id"
 
   root_path='/home/qc/twj/ml_data/data2/'
-  data_path="#${ev_id}_hour_available_energy_2.csv"
+  data_path="#${ev_id}_ae.csv"
   c_len=2
   enc_in=$c_len
   dec_in=$c_len
   c_out=$c_len
   target="available_energy"
-  des="available-energy-2-#${ev_id}"
+  des="ae-#${ev_id}"
   train_epochs=6
   # 文件名
   filename="./scripts/seq_label_pred.txt"

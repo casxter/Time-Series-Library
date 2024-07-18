@@ -7,7 +7,7 @@ sns.set_theme(style="ticks")
 
 model_id_dict = {'Transformer': 1, 'Informer': 2, 'FEDformer': 3, 'CNNLSTM': 4,'TimeMixer': 5}
 
-EXP_TIME = "0710-2226"
+EXP_TIME = "0710-11"
 def read_result():
     # 显示跑完的结果
     metrics_df = pd.DataFrame(columns=['ev_id', 'model', 'target', 'sl', 'pl', 'mae', 'mse', 'mape'])
@@ -54,10 +54,10 @@ def show_all_model():
     # plt.tight_layout()
     plt.show()
 
-def show_fed_timemixer():
+def show_timemixer():
     metrics_df = read_result()
     plt.figure(figsize=(12,9))
-    metrics_df = metrics_df[(metrics_df['model'] == 'FEDformer') | (metrics_df['model'] == 'TimeMixer')]
+    metrics_df = metrics_df[(metrics_df['model'] == 'TimeMixer')]
 
     lm = sns.lmplot(
         data=metrics_df, x="model_id", y="mse", col="ev_id", hue='sl_pl', col_wrap=3, palette="muted", ci=None,
@@ -71,5 +71,5 @@ def show_fed_timemixer():
     plt.tight_layout()
     plt.show()
 
-show_all_model()
-# show_fed_timemixer()
+# show_all_model()
+# show_timemixer()
