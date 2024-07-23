@@ -51,7 +51,6 @@ for ev_id in $(seq 0 5); do
       --label_len $label_len \
       --pred_len $pred_len \
       --target $target \
-      --channel_independence 0 \
       --e_layers 2 \
       --d_layers 1 \
       --train_epochs 10 \
