@@ -29,23 +29,25 @@ for ev_id in $(seq 0 5); do
     # 输出读取的值
     echo "seq_len: $seq_len, label_len: $label_len, pred_len: $pred_len"
 
-    #Transformer
-
-    python -u run.py \
+      # FEDformer
+      python -u run.py \
         --task_name long_term_forecast \
         --is_training 1 \
         --root_path $root_path \
         --data_path $data_path \
         --model_id $model_id\
-        --model Transformer \
+        --model FEDformer \
         --data custom \
         --features MS \
         --seq_len $seq_len \
         --label_len $label_len \
         --pred_len $pred_len \
         --target $target \
-        --e_layers 2 \
+        --e_layers 1 \
         --d_layers 1 \
+        --d_model 16 \
+        --d_ff 16 \
+        --learning_rate 0.01 \
         --factor 3 \
         --train_epochs $train_epochs \
         --batch_size 64 \
@@ -54,64 +56,44 @@ for ev_id in $(seq 0 5); do
         --c_out $c_out \
         --des $des \
         --itr 1 \
-        2>&1 | tee -a logs/$LOG_FILE
+        2>&1 | tee -a  logs/$LOG_FILE
 
-    # Informer
+    # TimeMixer
+
+    d_model=8
+    d_ff=8
+    down_sampling_layers=2
+    down_sampling_window=2
+
     python -u run.py \
       --task_name long_term_forecast \
       --is_training 1 \
       --root_path $root_path \
       --data_path $data_path \
       --model_id $model_id\
-      --model Informer \
+      --model TimeMixer \
       --data custom \
       --features MS \
       --seq_len $seq_len \
       --label_len $label_len \
       --pred_len $pred_len \
       --target $target \
-      --e_layers 2 \
+      --e_layers 1 \
       --d_layers 1 \
-      --factor 3 \
-      --train_epochs $train_epochs \
-      --batch_size 64 \
+      --train_epochs 5 \
+      --batch_size 32 \
       --enc_in $enc_in \
       --dec_in $dec_in \
       --c_out $c_out \
       --des $des \
       --itr 1 \
+      --d_model $d_model \
+      --d_ff $d_ff \
+      --learning_rate 0.00001 \
+      --down_sampling_layers $down_sampling_layers \
+      --down_sampling_method avg \
+      --down_sampling_window $down_sampling_window \
       2>&1 | tee -a  logs/$LOG_FILE
-
-      #CNN-LSTM
-
-      python -u run.py \
-        --task_name long_term_forecast \
-        --is_training 1 \
-        --root_path $root_path \
-        --data_path $data_path \
-        --model_id $model_id\
-        --model CNNLSTM \
-        --data custom \
-        --features MS \
-        --seq_len $seq_len \
-        --label_len $label_len \
-        --pred_len $pred_len \
-        --target $target \
-        --e_layers 2 \
-        --d_layers 1 \
-        --factor 3 \
-        --train_epochs $train_epochs \
-        --batch_size 128 \
-        --d_model 16 \
-        --d_ff 32 \
-        --enc_in $enc_in \
-        --dec_in $dec_in \
-        --c_out $c_out \
-        --des $des \
-        --itr 1 \
-        --cnnlstm_hidden 128 \
-        --cnnlstm_nl 3 \
-        2>&1 | tee -a  logs/$LOG_FILE
 
   done < "$filename"
 done

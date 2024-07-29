@@ -35,3 +35,7 @@ result_long_term_forecast_7_9.txt 去除timemixer result_long_term_forecast_7_9_
 
 result_long_term_forecast_0710-11.txt
 5个对比模型
+
+
+0718-1114
+FEATimeMixer

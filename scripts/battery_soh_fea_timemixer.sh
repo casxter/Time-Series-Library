@@ -53,7 +53,7 @@ for ev_id in $(seq 0 5); do
       --target $target \
       --e_layers 2 \
       --d_layers 1 \
-      --train_epochs 10 \
+      --train_epochs 15 \
       --batch_size 32 \
       --enc_in $enc_in \
       --dec_in $dec_in \
