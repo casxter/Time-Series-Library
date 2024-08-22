@@ -1,4 +1,5 @@
 import json
+import pickle
 
 from data_provider.data_factory import data_provider
 from exp.exp_basic import Exp_Basic
@@ -290,10 +291,7 @@ class Exp_Long_Term_Forecast(Exp_Basic):
         np.save(folder_path + 'pred.npy', preds)
         np.save(folder_path + 'true.npy', trues)
 
-        # save args
-
-        # Save the dictionary to a JSON file
-        with open('./results/' + setting + '/' + 'model_arg.json', 'w') as file:
-            json.dump(vars(self.args), file, indent=4)
+        # Save the arg to a file
+        pickle.dump(self.args,open('./results/' + setting + '/' + 'model_arg.pkl', 'wb'))
 
         return

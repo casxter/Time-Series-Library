@@ -6,7 +6,7 @@ import pandas as pd
 import seaborn as sns
 from matplotlib import pyplot as plt
 
-plt.rcParams['font.family'] = 'Times New Roman'
+# plt.rcParams['font.family'] = 'Times New Roman'
 plt.rcParams["figure.dpi"] = 300
 plt.rcParams["savefig.dpi"] = 400
 
@@ -48,7 +48,7 @@ def read_result():
 
 
 def show_all_model(metrics_df):
-    sns.set_theme(style="ticks", font='Times New Roman', font_scale=1.8)
+    sns.set_theme(style="ticks", font_scale=1.8)
 
     lm = sns.lmplot(
         data=metrics_df, x="Model", y="MSE", col="ev_id", hue='sl_pl', col_wrap=3, palette="muted", ci=None,
@@ -57,7 +57,7 @@ def show_all_model(metrics_df):
     axs = lm.axes.flatten()
     for i in range(3, 6):
         axs[i].set_xticks(np.linspace(1, 6, 6))
-        axs[i].set_xticklabels(list(model_id_dict.keys()), rotation=30)
+        axs[i].set_xticklabels(list(model_id_dict.keys()), rotation=25)
 
     for ax in lm.axes.flat:
         ax.grid(True)  # 启用网格线
@@ -65,19 +65,38 @@ def show_all_model(metrics_df):
     plt.subplots_adjust(bottom=0.11)
     # plt.tight_layout()
 
-    plt.savefig(os.path.join(FIG_PATH, 'model_6_comparison.png'))
-    plt.savefig(os.path.join(FIG_PATH, 'model_6_comparison.pdf'))
+    plt.savefig(os.path.join(FIG_PATH, 'model_6_mse_comparison.png'))
+    plt.savefig(os.path.join(FIG_PATH, 'model_6_mse_comparison.pdf'))
+    plt.show()
+
+    lm = sns.lmplot(
+        data=metrics_df, x="Model", y="MAE", col="ev_id", hue='sl_pl', col_wrap=3, palette="muted", ci=None,
+        fit_reg=False, legend_out=True
+    )
+    axs = lm.axes.flatten()
+    for i in range(3, 6):
+        axs[i].set_xticks(np.linspace(1, 6, 6))
+        axs[i].set_xticklabels(list(model_id_dict.keys()), rotation=25)
+
+    for ax in lm.axes.flat:
+        ax.grid(True)  # 启用网格线
+
+    plt.subplots_adjust(bottom=0.11)
+    # plt.tight_layout()
+
+    plt.savefig(os.path.join(FIG_PATH, 'model_6_mae_comparison.png'))
+    plt.savefig(os.path.join(FIG_PATH, 'model_6_mae_comparison.pdf'))
     plt.show()
 
 def show_all_model_violinplot(metrics_df):
-    sns.set_theme(style="ticks", font='Times New Roman')
+    sns.set_theme(style="ticks")
     g = sns.FacetGrid(metrics_df, col="ev_id",col_wrap=3)
     g.map(sns.violinplot, "Model", "MSE", fill=False)
 
     plt.show()
 
 def show_timemixer_comparison(metrics_df):
-    sns.set_theme(style="ticks", font='Times New Roman', font_scale=1.8)
+    sns.set_theme(style="ticks", font_scale=1.8)
 
     models = ['FEDformer', 'TimeMixer', 'FEATimeMixer']
     # plt.figure(figsize=(12,9))
@@ -93,7 +112,7 @@ def show_timemixer_comparison(metrics_df):
     axs = lm.axes.flatten()
     for i in range(3, 6):
         axs[i].set_xticks(np.linspace(4, 6, 3))
-        axs[i].set_xticklabels(models, rotation=30)
+        axs[i].set_xticklabels(models, rotation=25)
 
     for ax in lm.axes.flat:
         ax.grid(True)  # 启用网格线
@@ -110,7 +129,7 @@ def show_multistep(metrics_df):
     """
     3.5
     """
-    sns.set_theme(style="whitegrid", font='Times New Roman')
+    sns.set_theme(style="whitegrid")
 
     # plt.figure(figsize=(12,9))
     metrics_df = metrics_df[(metrics_df['model_name'] == 'FEATimeMixer')]
@@ -275,9 +294,9 @@ def show_rader(metrics_df):
 
 metrics_df = read_result()
 
-# show_multistep()
-# show_all_model_table(metrics_df)
+# show_multistep(metrics_df)
 # show_all_model(metrics_df)
-show_all_model_violinplot(metrics_df)
 # show_timemixer_comparison(metrics_df)
-# show_rader(metrics_df)
+show_rader(metrics_df)
+# show_all_model_table(metrics_df)
+# show_all_model_violinplot(metrics_df)
