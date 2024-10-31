@@ -1,41 +1,8 @@
-result_long_term_forecast_7_3_include_ae_and_imf.txt
-做了两组实验 exp7_3 预测#x_hour_available_energy.csv，#x_hour_residual_ae_imf.csv
-
-seq_label_pred.txt
-72 36 36
-72 36 72
-168 84 84
-168 84 168
-360 180 180
-360 180 360
-720 360 360
-720 360 720
-
-包含模型
-Transformer 2017
-Informer 2020
-FEDformer 2022
-TimesNet 2022
-TimeMixer 2022
+result_long_term_forecast_0727-1231.txt battery_soh_available_energy.sh 3个模型 Transformer Informer CNN-LSTM
 
 
-exp7_6
-r_ae_20240706-214318.log
-一组实验 预测_hour_available_energy_2
-Transformer
-Informer
-FEDformer
-CNNLSTM
-TimeMixer
+result_long_term_forecast_0727-1630.txt battery_soh_available_energy_2.sh 2个模型 FEDformer TimeMixer
 
+result_long_term_forecast_0727-1754.txt battery_soh_fea_timemixer.sh 1个模型
 
-result_long_term_forecast_7_9.txt 去除timemixer result_long_term_forecast_7_9_all.txt 包含timemixer
-
-
-
-result_long_term_forecast_0710-11.txt
-5个对比模型
-
-
-0718-1114
-FEATimeMixer
+result_long_term_forecast_0727.txt 包含上面所有数据

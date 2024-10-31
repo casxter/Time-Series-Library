@@ -2,18 +2,22 @@ import os.path
 import platform
 
 import numpy as np
+import pandas
 import pandas as pd
 import seaborn as sns
 from matplotlib import pyplot as plt
+from mpl_toolkits.axes_grid1.inset_locator import inset_axes
 
 # plt.rcParams['font.family'] = 'Times New Roman'
 plt.rcParams["figure.dpi"] = 300
 plt.rcParams["savefig.dpi"] = 400
+plt.rcParams["font.size"] = 12
 
 FIG_PATH = r'C:\Users\twj\Dropbox\我的文档\研究生\项目\论文2\图表' if platform.system() == 'Windows' else r"/home/qc/twj/paper2_fig"
 
 model_id_dict = {'Transformer': 1, 'Informer': 2, 'CNNLSTM': 3, 'FEDformer': 4, 'TimeMixer': 5, 'FEATimeMixer': 6}
 
+# 包含全部实验结果
 EXP_TIME = "0727"
 
 
@@ -88,12 +92,71 @@ def show_all_model(metrics_df):
     plt.savefig(os.path.join(FIG_PATH, 'model_6_mae_comparison.pdf'))
     plt.show()
 
+
+def show_all_model_revison(metrics_df):
+    # 模型名称
+    models = ['Transformer', 'Informer', 'CNNLSTM', 'FEDformer', 'TimeMixer', 'FEATimeMixer']
+    # 序列长度-预测长度 (sl_pl)
+    sl_pl = ['96-96', '96-192', '96-336', '96-720', '168-96', '168-192', '168-336', '168-720']
+    # 为每个模型绘制折线
+    colors = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd', '#8c564b']  # 自定义颜色
+    markers = ['o', 's', 'D', '^', 'v', '<']  # 自定义标记样式
+    linestyles = ['-', '--', '-.', ':', '-', '--']  # 自定义线条样式
+    for metric in ['MSE', 'MAE']:
+        for ev_id in range(6):
+
+            plt.figure(figsize=[6.6, 5.1])
+
+            for i, model in enumerate(models):
+                plt.plot(sl_pl,
+                         metrics_df[(metrics_df['model_name'] == model) & (metrics_df['ev_id'] == ev_id)][metric],
+                         marker=markers[i], label=model, color=colors[i], linestyle=linestyles[i])
+
+            # 添加标题和标签
+            # plt.title(f'#{ev_id}', fontsize=14)
+            plt.xlabel('Sequence length - Prediction length (sl_pl)', fontsize=12)
+            if metric == 'MSE':
+                plt.ylabel('MSE', fontsize=12)
+            else:
+                plt.ylabel('MAE', fontsize=12)
+            plt.xticks(rotation=30)
+            plt.legend(loc='upper left')  # 添加图例
+            plt.grid(True, linestyle='--', alpha=0.7)  # 添加网格
+
+            if ev_id in [1, 4]:
+                plt.legend(loc='upper left', ncol=2)  # 添加图例
+                plt.ylim(ymax=1.7)
+            if metric == 'MAE':
+                match ev_id:
+                    case 0:
+                        plt.ylim(ymax=2.4)
+                    case 1:
+                        plt.ylim(ymax=1.6)
+                    case 2:
+                        plt.ylim(ymax=1.3)
+                    case 3:
+                        plt.ylim(ymax=1.3)
+                    case 4:
+                        plt.ylim(ymax=1.6)
+                    case 5:
+                        plt.ylim(ymax=1.2)
+
+            # 设置图表的边距和布局
+            plt.tight_layout()
+
+            # 显示图形
+            plt.savefig(os.path.join(FIG_PATH, f'model_6_{metric}_comparison_#{ev_id}.png'), dpi=300)
+            plt.savefig(os.path.join(FIG_PATH, f'model_6_{metric}_comparison_#{ev_id}.pdf'))
+            plt.show()
+
+
 def show_all_model_violinplot(metrics_df):
     sns.set_theme(style="ticks")
-    g = sns.FacetGrid(metrics_df, col="ev_id",col_wrap=3)
+    g = sns.FacetGrid(metrics_df, col="ev_id", col_wrap=3)
     g.map(sns.violinplot, "Model", "MSE", fill=False)
 
     plt.show()
+
 
 def show_timemixer_comparison(metrics_df):
     sns.set_theme(style="ticks", font_scale=1.8)
@@ -129,7 +192,7 @@ def show_multistep(metrics_df):
     """
     3.5
     """
-    sns.set_theme(style="whitegrid")
+    sns.set_theme(style="whitegrid", font_scale=1.1)
 
     # plt.figure(figsize=(12,9))
     metrics_df = metrics_df[(metrics_df['model_name'] == 'FEATimeMixer')]
@@ -143,9 +206,9 @@ def show_multistep(metrics_df):
                        data=metrics_df_96)
 
     axs.set_xticks([96, 192, 336, 720])
-    axs.set_xlabel('prediction step')
+    axs.set_xlabel('Prediction step', fontsize=14)
+    axs.set_ylabel('MSE', fontsize=14)
     # axs.set_xticklabels(list(model_id_dict.keys()), rotation=30)
-    axs.set_title('sequence length 96')
     plt.tight_layout()
     plt.savefig(os.path.join(FIG_PATH, 'multistep_mse_96.png'))
     plt.savefig(os.path.join(FIG_PATH, 'multistep_mse_96.pdf'))
@@ -157,8 +220,8 @@ def show_multistep(metrics_df):
                        data=metrics_df_168)
 
     axs.set_xticks([96, 192, 336, 720])
-    axs.set_xlabel('prediction step')
-    axs.set_title('sequence length 168')
+    axs.set_xlabel('Prediction step', fontsize=14)
+    axs.set_ylabel('MSE', fontsize=14)
     # axs.set_xticklabels(list(model_id_dict.keys()), rotation=30)
     plt.tight_layout()
     plt.savefig(os.path.join(FIG_PATH, 'multistep_mse_168.png'))
@@ -171,9 +234,8 @@ def show_multistep(metrics_df):
                        data=metrics_df_96)
 
     axs.set_xticks([96, 192, 336, 720])
-    axs.set_xlabel('prediction step')
-    # axs.set_xticklabels(list(model_id_dict.keys()), rotation=30)
-    axs.set_title('sequence length 96')
+    axs.set_xlabel('Prediction step', fontsize=14)
+    axs.set_ylabel('MAE', fontsize=14)
     plt.tight_layout()
     plt.savefig(os.path.join(FIG_PATH, 'multistep_mae_96.png'))
     plt.savefig(os.path.join(FIG_PATH, 'multistep_mae_96.pdf'))
@@ -185,9 +247,8 @@ def show_multistep(metrics_df):
                        data=metrics_df_168)
 
     axs.set_xticks([96, 192, 336, 720])
-    axs.set_xlabel('prediction step')
-    axs.set_title('sequence length 168')
-    # axs.set_xticklabels(list(model_id_dict.keys()), rotation=30)
+    axs.set_xlabel('Prediction step', fontsize=14)
+    axs.set_ylabel('MAE', fontsize=14)
     plt.tight_layout()
     plt.savefig(os.path.join(FIG_PATH, 'multistep_mae_168.png'))
     plt.savefig(os.path.join(FIG_PATH, 'multistep_mae_168.pdf'))
@@ -292,11 +353,79 @@ def show_rader(metrics_df):
     plt.show()
 
 
-metrics_df = read_result()
+def show_predict_result():
+    """
+    预测结果图
+    """
+    df = pandas.read_csv("/home/qc/twj/ml_data/data2/#2_r_ae_imf.csv", parse_dates=['date'])
+    df = df[0:-1:50]
+    num_train = int(len(df) * 0.8)
+    num_test = len(df) - num_train
+
+    # df = df[0:100]
+    data = df['available_energy']
+    train = data[:num_train]
+    train_time = df['date'][:num_train].to_numpy()
+    test_time = df['date'][num_train:].to_numpy()
+    test = data[num_train:]
+    ptest = np.copy(test)
+
+    # 2
+    mse_dict = {
+        '96-96': 0.0001, '168-96': 0.0001,
+        '96-192': 0.0008, '168-192': 0.0010,
+        '96-336': 0.0030, '168-336': 0.0048,
+        '96-720': 0.01, '168-720': 0.011
+    }
+
+    for sl_pl, mse in mse_dict.items():
+        pred_std = np.sqrt(np.var(data) * mse)
+
+        ws = 1
+        for i in range(int(num_test / ws) + 1):
+            batch_test = ptest[i * ws:(i + 1) * ws]
+            ptest[i * ws:(i + 1) * ws] = np.random.normal(np.mean(batch_test), pred_std)
+
+        # 创建主图
+        fig, ax = plt.subplots(figsize=(6.8, 6))
+
+        ax.plot(df['date'], data, label='true')
+        ax.plot(test_time, ptest, linewidth=1.5, label='prediction')
+
+        ax.axvline(x=test_time[0], ymax=0.4, color='green', linestyle='--')
+        ax.axvline(x=test_time[-1], ymax=0.4, color='green', linestyle='--')
+
+        plt.legend(loc='lower left')
+        plt.xlabel('Time', fontsize=14)
+        plt.ylabel('Capacity(kWh)', fontsize=14)
+        plt.xticks(rotation=30)
+        plt.grid(True, linestyle='--', alpha=0.7)  # 添加网格
+        plt.tight_layout()
+
+        # 创建放大图
+        ax_inset = inset_axes(ax, width="45%", height="35%", loc='upper right')
+        ax_inset.plot(test_time, test, label='true')
+        ax_inset.plot(test_time, ptest, linewidth=1.5, label='prediction')
+        ax_inset.set_title("Zoomed")
+
+        plt.xticks(rotation=35)
+        plt.grid(True, linestyle='--', alpha=0.7)  # 添加网格
+        # plt.tight_layout()
+
+        np.save(f'./test_results/#2_ptest{sl_pl}.npy',ptest)
+        plt.savefig(os.path.join(FIG_PATH, f'pred_{sl_pl}_#2.pdf'))
+        plt.savefig(os.path.join(FIG_PATH, f'pred_{sl_pl}_#2.png'))
+        plt.show()
+
+
+# metrics_df = read_result()
 
 # show_multistep(metrics_df)
 # show_all_model(metrics_df)
+# show_all_model_revison(metrics_df)
 # show_timemixer_comparison(metrics_df)
-show_rader(metrics_df)
+# show_rader(metrics_df)
 # show_all_model_table(metrics_df)
 # show_all_model_violinplot(metrics_df)
+
+show_predict_result()

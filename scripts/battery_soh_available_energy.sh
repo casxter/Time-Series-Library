@@ -29,8 +29,7 @@ for ev_id in $(seq 0 5); do
     # 输出读取的值
     echo "seq_len: $seq_len, label_len: $label_len, pred_len: $pred_len"
 
-    #Transformer
-
+    # Transformer
     python -u run.py \
         --task_name long_term_forecast \
         --is_training 1 \
@@ -82,36 +81,35 @@ for ev_id in $(seq 0 5); do
       --itr 1 \
       2>&1 | tee -a  logs/$LOG_FILE
 
-      #CNN-LSTM
-
-      python -u run.py \
-        --task_name long_term_forecast \
-        --is_training 1 \
-        --root_path $root_path \
-        --data_path $data_path \
-        --model_id $model_id\
-        --model CNNLSTM \
-        --data custom \
-        --features MS \
-        --seq_len $seq_len \
-        --label_len $label_len \
-        --pred_len $pred_len \
-        --target $target \
-        --e_layers 2 \
-        --d_layers 1 \
-        --factor 3 \
-        --train_epochs $train_epochs \
-        --batch_size 128 \
-        --d_model 16 \
-        --d_ff 32 \
-        --enc_in $enc_in \
-        --dec_in $dec_in \
-        --c_out $c_out \
-        --des $des \
-        --itr 1 \
-        --cnnlstm_hidden 128 \
-        --cnnlstm_nl 3 \
-        2>&1 | tee -a  logs/$LOG_FILE
+    # CNN-LSTM
+    python -u run.py \
+      --task_name long_term_forecast \
+      --is_training 1 \
+      --root_path $root_path \
+      --data_path $data_path \
+      --model_id $model_id\
+      --model CNNLSTM \
+      --data custom \
+      --features MS \
+      --seq_len $seq_len \
+      --label_len $label_len \
+      --pred_len $pred_len \
+      --target $target \
+      --e_layers 2 \
+      --d_layers 1 \
+      --factor 3 \
+      --train_epochs $train_epochs \
+      --batch_size 128 \
+      --d_model 16 \
+      --d_ff 32 \
+      --enc_in $enc_in \
+      --dec_in $dec_in \
+      --c_out $c_out \
+      --des $des \
+      --itr 1 \
+      --cnnlstm_hidden 128 \
+      --cnnlstm_nl 3 \
+      2>&1 | tee -a  logs/$LOG_FILE
 
   done < "$filename"
 done

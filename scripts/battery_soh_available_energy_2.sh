@@ -19,7 +19,7 @@ for ev_id in $(seq 0 5); do
   c_out=$c_len
   target="available_energy"
   des="ae-#${ev_id}"
-  train_epochs=6
+  train_epochs=2
   # 文件名
   filename="./scripts/seq_label_pred.txt"
 
@@ -45,8 +45,8 @@ for ev_id in $(seq 0 5); do
         --target $target \
         --e_layers 1 \
         --d_layers 1 \
-        --d_model 16 \
-        --d_ff 16 \
+        --d_model 8 \
+        --d_ff 8 \
         --learning_rate 0.01 \
         --factor 3 \
         --train_epochs $train_epochs \
@@ -59,9 +59,8 @@ for ev_id in $(seq 0 5); do
         2>&1 | tee -a  logs/$LOG_FILE
 
     # TimeMixer
-
-    d_model=8
-    d_ff=8
+    d_model=4
+    d_ff=4
     down_sampling_layers=2
     down_sampling_window=2
 
